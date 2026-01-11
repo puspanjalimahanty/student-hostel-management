@@ -4,12 +4,14 @@ const API = axios.create({
   baseURL: "https://student-hostel-management.onrender.com/api"
 });
 
+// 🔐 Attach token to every request
 API.interceptors.request.use((req) => {
-  const userInfo = localStorage.getItem("user");
-  if (userInfo) {
-    const user = JSON.parse(userInfo);
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (user?.token) {
     req.headers.Authorization = `Bearer ${user.token}`;
   }
+
   return req;
 });
 
